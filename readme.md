@@ -1,9 +1,12 @@
-# Metasploit CMS scanner Module
+# Metasploit custom Module
 
-date : 2017.05.23  
+date : 2017.05.01 ~ 2017.10.31
 author : 김기훈  
 
- - 설명  
- 소스코드 비교를 통한 CMS version 탐지 모듈
+설명  
+  metasploit module 제작
 
-작업 중...
+list
+ - CMS_version_scanner
+ - nexpose_console
+
