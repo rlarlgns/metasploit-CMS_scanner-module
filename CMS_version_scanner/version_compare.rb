@@ -1,6 +1,8 @@
 require 'htmlentities'
+require './version_sort'
 
 class Version_compare
+	include Version_sort
 	##########################################################################################
 	# Auth : Kimkihoon
 	# edit_date : 2017.09.01
@@ -98,6 +100,7 @@ class Version_compare
 
 			xml_data.push("<CMS_type type_ID=\"" + cms_type + "\">" + "\n")
 			version_arr = Dir.glob("*")
+			version_arr = version_sort(version_arr)
 			version_base = Dir.pwd
 
 			for i in 1..version_arr.size()-1
@@ -128,5 +131,9 @@ class Version_compare
 				file_data.each do |data|
 					File.open(file_name, "a") { |f| f.write(data) }
 				end
+	end
+
+	def initialize(cms_name)
+		return get_data(cms_name)
 	end
 end
