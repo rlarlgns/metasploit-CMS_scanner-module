@@ -1,4 +1,3 @@
-require 'htmlentities'
 require './version_sort'
 
 class Version_compare
@@ -32,7 +31,7 @@ class Version_compare
 		edit_object = Array.new
 		exception_object = Array.new
 
-
+		exception_list = '**.{php,gif,png,jpg,mp3,swf,htc,js}'
 		last_arr.each do |x|
 			if(!old_arr.include?(x))
 				new_object.push(x)
@@ -47,12 +46,13 @@ class Version_compare
 					f2 = File.open(old_ver_dir + '/' + x, "r:UTF-8").readlines().map(&:chomp)
 
 					if(f1 != f2)
-						if(File.fnmatch('**.php', x) == true)
+						if(File.fnmatch(exception_list, x, File::FNM_EXTGLOB) == true)
 							exception_object.push(x)
 						else
 							xml_data.push("<url url_ID=\"/" + x + "\">\n")
 							xml_data.push("<data>" + "\n")
-							xml_data.push(HTMLEntities.new.encode((f1-f2).join("\n")))
+							data = (f1-f2).join("\n")
+							xml_data.push(data)
 							xml_data.push("</data>" + "\n")
 							xml_data.push("</url>\n")
 						end
