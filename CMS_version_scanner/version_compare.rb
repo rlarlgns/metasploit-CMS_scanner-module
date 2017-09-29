@@ -1,4 +1,5 @@
 require './version_sort'
+require 'htmlentities'
 
 class Version_compare
 	include Version_sort
@@ -32,6 +33,7 @@ class Version_compare
 		exception_object = Array.new
 
 		exception_list = '**.{php,gif,png,jpg,mp3,swf,htc,js}'
+
 		last_arr.each do |x|
 			if(!old_arr.include?(x))
 				new_object.push(x)
@@ -51,8 +53,8 @@ class Version_compare
 						else
 							xml_data.push("<url url_ID=\"/" + x + "\">\n")
 							xml_data.push("<data>" + "\n")
-							data = (f1-f2).join("\n")
-							xml_data.push(data)
+							data = (f1-f2).join("\n").encode("UTF-8", :invalid => :replace, :undef => :replace, :replace => "_")
+							xml_data.push(HTMLEntities.new.encode(data))
 							xml_data.push("</data>" + "\n")
 							xml_data.push("</url>\n")
 						end
@@ -64,7 +66,7 @@ class Version_compare
 		end
 
 		new_object.each do |url|
-			xml_data.push("<url url_ID=\"/" + url + "\">" + "</url>\n")
+			xml_data.push("<url url_ID=\"/" + url + "\">" + "<data></data>" + "</url>\n")
 		end
 	end
 
