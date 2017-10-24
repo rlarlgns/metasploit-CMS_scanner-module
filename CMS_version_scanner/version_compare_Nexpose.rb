@@ -76,7 +76,7 @@ class Version_compare_Nexpose
 	# 수정된 파일 중 몇몇 확장자 (ex. php)를 별도로 제외하여 경로만 출력
 	##########################################################################################
 	def compare_version_directory(last_ver_dir, old_ver_dir)
-		
+
 		base = Dir.pwd
 		last_ver_dir = base + "/" + last_ver_dir
 		old_ver_dir = base + "/" + old_ver_dir
@@ -96,8 +96,6 @@ class Version_compare_Nexpose
 		edit_object = Array.new
 		same_object = Array.new
 
-		exception_list = '**.{php,gif,png,jpg,mp3,swf,htc}'
-
 		last_arr.each do |x|
 			# 구 버전에 새로운 버전의 파일이 포함되어 있는가
 			if(!old_arr.include?(x))
@@ -108,7 +106,7 @@ class Version_compare_Nexpose
 				same_object.push(x)
 			end
 		end
-		
+
 		# 파일 차이 비교
 		file_compare(same_object, vck_data)
 
@@ -135,7 +133,7 @@ class Version_compare_Nexpose
 	# Auth : Kimkihoon
 	# edit_date : 2017.10.10
 	# func : file_compare
-	# input 
+	# input
 	# => same_object : 비교한 버전의 같은 파일 리스트
 	# => vck_data : array
 	# description :
@@ -145,6 +143,9 @@ class Version_compare_Nexpose
 	# => data에 tag가 존재할 경우 인식 불가로 entity 변환 처리
 	#############################################################
 	def file_compare(same_object, vck_data)
+
+		exception_list = '**.{php,gif,png,jpg,mp3,swf,htc}'
+
 		same_object.each do |x|
 			if(File.file?(x))
 				f1 = File.open(last_ver_dir + '/' + x, "r:UTF-8").readlines().map(&:chomp)
@@ -183,7 +184,7 @@ class Version_compare_Nexpose
 	# Auth : Kimkihoon
 	# edit_date : 2017.10.10
 	# func : encoding_data
-	# input 
+	# input
 	# => f1 : 파일 데이터
 	# => regex_data : array
 	# description :
