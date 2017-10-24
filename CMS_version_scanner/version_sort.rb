@@ -7,19 +7,20 @@
 # output - 정렬된 각 버전의 이름이 담긴 배열
 ################################################
 module Version_sort
-  def version_sort(version_arr)
-    def version_bubble_sort(start, finish, idx, array, version_arr)
-        for i in start...finish
-          for j in start...finish
-            if array[j][idx].to_i > array[j+1][idx].to_i
-              array[j], array[j+1] = array[j+1], array[j]
-              version_arr[j], version_arr[j+1] = version_arr[j+1], version_arr[j]
-            end
-          end
-        end
-        return array
-    end
 
+  def version_bubble_sort(start, finish, idx, array, version_arr)
+    for i in start...finish
+      for j in start...finish
+        if array[j][idx].to_i > array[j+1][idx].to_i
+          array[j], array[j+1] = array[j+1], array[j]
+           version_arr[j], version_arr[j+1] = version_arr[j+1], version_arr[j]
+         end
+      end
+    end
+    return array
+  end
+
+  def version_sort(version_arr)
     num_arr = Array.new()
     version_arr.each { |data| num_arr.push(data.gsub(/[a-z_]/,'').split('.'))}
     num_idx = 0
@@ -28,7 +29,7 @@ module Version_sort
         num_idx = data.length()
       end
     }
-    puts num_idx
+
     version_bubble_sort(0, num_arr.length()-1, 0, num_arr, version_arr)
 
     for i in 1...num_idx
@@ -43,5 +44,11 @@ module Version_sort
     end
 
     return version_arr
+  end
+end
+
+class String
+  def foreign_language?
+    (chars.count < bytes.count)
   end
 end
